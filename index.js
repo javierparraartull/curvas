@@ -14,7 +14,8 @@ const sketch = () => {
     new Point({x:200,y:540}),
     new Point({x:400,y:300, control:true}),
     new Point({x:880, y:540}),
-  ] 
+  ];
+
   return ({context,width,height}) => {
 
     context.fillStyle = 'white';
@@ -45,7 +46,7 @@ class Point {
     this.y = y;
     this.control=control;
 
-  }
+  };
 
 draw (context)
 {
@@ -56,5 +57,6 @@ draw (context)
   context.beginPath();
   context.arc(0,0,10,0,Math.PI*2);
   context.fill();
+  context.restore();
 };
 }
