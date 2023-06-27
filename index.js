@@ -6,15 +6,17 @@ const settings = {
 
 };
 
-const sketch = () => {
+const sketch = ({canvas}) => {
 
 
   const points = [
 
     new Point({x:200,y:540}),
-    new Point({x:400,y:300, control:true}),
-    new Point({x:880, y:540}),
+    new Point({x:900,y:200, control:true}),
+    new Point({x:880, y:900}),
   ];
+
+  canvas.addEventListener('mousedown',onMouseDown);
 
   return ({context,width,height}) => {
 
@@ -37,6 +39,22 @@ const sketch = () => {
   };
 };
 
+
+  const onMouseDown = (e) => {
+    window.addEventListener('mousemov',onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+  };
+
+   const onMouseMove =(e) => {
+    console.log(e.offsetX,e.offsetY);
+
+   };
+
+   const onMouseUp = () => {
+    window.removeEventListener('mousemov',onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+   };
+
   canvasSketch(sketch,settings);
 
 // CREAMOS LA CLASE PUNTO PARA TENERLO MÁS ORDENADO. DIBUJAREMOS LOS PUNTOS
@@ -44,15 +62,15 @@ class Point {
   constructor ({x,y,control=false}){
     this.x = x;
     this.y = y;
-    this.control=control;
+    this.control = control;
 
-  };
+  }
 
 draw (context)
 {
   context.save();
   context.translate(this.x,this.y);
-  content.fillStyle = this.control ? 'red' : 'black';
+  context.fillStyle = this.control ? 'red' : 'black';
 
   context.beginPath();
   context.arc(0,0,10,0,Math.PI*2);
